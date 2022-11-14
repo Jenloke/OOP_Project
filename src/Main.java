@@ -7,7 +7,6 @@ public class Main {
         /*
         posible var in driver code
             betsize should be taken here
-
         */
 
         BasicUser user1 = new BasicUser();
@@ -28,7 +27,6 @@ public class Main {
         }
 
         // getter lang naman ito
-
         int betColor = read.nextInt() - 1;
 
         int winMultiplier = 1;
