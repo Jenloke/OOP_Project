@@ -9,7 +9,25 @@ public class Main {
             betsize should be taken here
         */
 
+        //should only be possible when creating user
+        //this object should be newUser instead of user1
+        // default constructor should be
+
+        System.out.println("Are you a new user?");
+        String newUserAnswer = read.nextLine();
+
+        if (newUserAnswer == "Yes") {
+            String inputUserName;
+            System.out.println("UserName:");
+            inputUserName = read.nextLine();
+
+
+            //BasicUser user1 = new BasicUser();
+            System.out.println("Want to play now?");
+        }
+        //the user that is currently playing should be currentUser not user1
         BasicUser user1 = new BasicUser();
+
         user1.display();
 
         ColorGame game = new ColorGame(); // to access ColorGame Class Methods
