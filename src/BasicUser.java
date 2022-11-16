@@ -16,12 +16,6 @@ public class BasicUser extends User {
         userName = readUserInput.nextLine();
     }
 
-//    public void setWallet() {
-//        Scanner readUserInput = new Scanner(System.in);
-//        System.out.print("Enter an amount you would to add to your wallet: ");
-//        wallet = readUserInput.nextInt();
-//    }
-
     public void updateWallet(int i) {
         wallet += i;
     }
@@ -38,9 +32,5 @@ public class BasicUser extends User {
 
     public int getWallet() {
         return wallet;
-    }
-
-    public void addWallet(int w) {
-        wallet += w;
     }
 }
