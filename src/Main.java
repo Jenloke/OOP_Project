@@ -63,10 +63,9 @@ public class Main {
         if (win) {
             System.out.println("Win");
             int amountWon = betAmount*winMultiplier;
-            user1.addWallet(amountWon);
+            user1.updateWallet(amountWon);
         }else {
             System.out.println("Lose");
-            user1.addWallet(betAmount*-1);
         }
 
         System.out.println(user1.getWallet());
