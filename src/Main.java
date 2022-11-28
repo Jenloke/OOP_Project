@@ -4,9 +4,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner read = new Scanner(System.in);
 
+        System.out.println("Welcome to Color Game!!!");
+        System.out.println("(1)");
+        System.out.println("(2)");
+        System.out.println("(3)");
+
         /*
-        posible var in driver code
-            betsize should be taken here
+        possible var in driver code
+            betSize should be taken here
         */
 
         //should only be possible when creating user
@@ -20,7 +25,6 @@ public class Main {
             String inputUserName;
             System.out.println("UserName:");
             inputUserName = read.nextLine();
-
 
             //BasicUser user1 = new BasicUser();
             System.out.println("Want to play now?");
