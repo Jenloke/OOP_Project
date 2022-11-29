@@ -3,8 +3,6 @@ import java.util.Scanner;
 public class BasicUser extends User {
 
     BasicUser () {
-//        setUserName();
-//        setWallet();
         userName = "ape";
         wallet = 0;
     }
