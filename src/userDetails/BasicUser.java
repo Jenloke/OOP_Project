@@ -3,9 +3,15 @@ package userDetails;
 import tools.*;
 
 public class BasicUser extends User {
+    public static int numberOfUsers;
+    private int userNumber;
+    public boolean selectedUser;
+
     public BasicUser() {
         super();
         initialize();
+        userNumber = numberOfUsers++;
+        selectedUser = true;
     }
 
     @Override
@@ -33,12 +39,11 @@ public class BasicUser extends User {
         }
     }
 
-//    public void updateWallet(int i) {
-//        wallet += i;
-//    }
-//
-//    public void display() {
-//        System.out.println(userName);
-//        System.out.println(wallet);
-//    }
+    public int getUserNumber() {
+        return userNumber;
+    }
+
+    public void updateWallet(int i) {
+        wallet += i;
+    }
 }

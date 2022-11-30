@@ -6,11 +6,16 @@ import tools.*;
 
 public class UI {
     private static boolean userSelected;
+    private static int userNumberSelected;
 
     public void init() {
         while(true) {
             Out.println("Welcome to Color Game!!!");
-            //users.User method or create new user object
+            if (users.isEmpty()) {
+                Out.println("---No Users Made, Create a new user first.---");
+            } else {
+                System.out.println();
+            }
             Out.println("(1) Play Color Game");
             Out.println("(2) Select / Create User");
             Out.println("(3) Wallet");
@@ -18,6 +23,10 @@ public class UI {
             select();
         }
     }
+
+//    private void selectUserNumber() {
+//        userNumberSelected = getUserNumber();
+//    }
 
     private void select(){
         while(true){
@@ -28,7 +37,7 @@ public class UI {
                 if(i<1 || i>4){
                     throw new ChoiceException();
                 }
-                performAction(i);
+                performChoice(i);
                 break;
             }catch(NumberFormatException e){
                 Out.println("Input must be a number");
@@ -38,7 +47,7 @@ public class UI {
         }
     }
 
-    private void performAction(int choice){
+    private void performChoice(int choice){
         switch(choice){
             case PLAY:
                 Out.line();
