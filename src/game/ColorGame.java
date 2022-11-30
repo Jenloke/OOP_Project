@@ -11,13 +11,15 @@ public class ColorGame extends RandomGenerator {
     private static final int roll = 3;
     private static int selectedColor;
     private static int betAmount;
+    private static int winMultiplier = 1;
+    private static boolean win = false;
     private static int winAmount;
 
     public static int play(int inputBetAmount) {
         setBetAmount(inputBetAmount);
         printColorList();
-        set3RandomColor();
         selectColor();
+        set3RandomColor();
         evalWin();
 
         return winAmount;
@@ -37,7 +39,6 @@ public class ColorGame extends RandomGenerator {
                     throw new ChoiceException();
                 }
                 selectedColor--;
-                //performAction(i);
                 break;
             } catch(NumberFormatException e) {
                 System.out.println("Input must be a number");
@@ -48,6 +49,7 @@ public class ColorGame extends RandomGenerator {
     }
 
     private static void printColorList() {
+        Out.println("Pick your color based on its corresponding number.");
         for (int i=0; i < colors.length; i++) {
             int order = i + 1;
             System.out.printf("[%d]%s \n", order, colors[i]);
@@ -58,28 +60,32 @@ public class ColorGame extends RandomGenerator {
         for (int i=0; i < roll; i++) {
             int roll = generateRandomNum(colors.length);
             rolledColors[i] = colors[roll];
-            print3RandomColor(i);
             rolledColorsValue[i] = roll;
         }
+        print3RandomColor();
     }
 
-    private static void print3RandomColor(int i) {
-        System.out.println(rolledColors[i] + " " + i);
+    private static void print3RandomColor() {
+        Out.line();
+        Out.println("The 3 random colors rolled are:");
+        for (int i=0; i < roll; i++) {
+            int displayVal = rolledColorsValue[i] + 1;
+            System.out.printf("[%d] %s\n", displayVal, rolledColors[i]);
+        }
+        Out.line();
     }
 
     private static void evalWin() {
-        int winMultiplier = 1;
-        boolean win = false;
-
         for (int i = 0; i < 3; i++) {
             if (selectedColor == rolledColorsValue[i]) {
                 winMultiplier++;
                 win = true;
             }
         }
+        printWin();
+    }
 
-        Out.line();
-
+    private static void printWin() {
         if (win) {
             winAmount = betAmount * winMultiplier;
             System.out.printf("You Win %d\n", winAmount);
@@ -88,7 +94,6 @@ public class ColorGame extends RandomGenerator {
             winAmount = 0;
             System.out.printf("You Lose your %d\n", betAmount);
         }
-
         Out.line();
     }
 }

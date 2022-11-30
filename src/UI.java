@@ -4,8 +4,8 @@ import tools.*;
 
 public class UI {
     public void init() {
-        Out.println("Welcome to Color Game!!!");
         while(true) {
+            Out.println("Welcome to Color Game!!!");
             //users.User method or create new user object
             Out.println("(1) Play Color Game");
             Out.println("(2) Select users.User");
@@ -21,7 +21,7 @@ public class UI {
             try{
                 input = Input.string("-> ");
                 int i = Integer.parseInt(input);
-                if(i<1 || i>5){
+                if(i<1 || i>4){
                     throw new ChoiceException();
                 }
                 performAction(i);
@@ -37,23 +37,29 @@ public class UI {
     private void performAction(int choice){
         switch(choice){
             case PLAY:
+                Out.line();
                 play();
                 break;
             case USERS:
+                Out.line();
                  users();
                 break;
             case WALLET:
+                Out.line();
                 wallet();
                 break;
             case EXIT:
+                Out.line();
+                Out.println("Thanks for playing Color Game!!!");
                 System.exit(0);
                 break;
         }
     }
 
     private void play() {
-        //get beat Amount method
-        ColorGame.play(100);
+        //BasicUser asd = new BasicUser();
+        int bet = ColorGame.play(100);
+        //asd.updateWallet(bet);
     }
     private void users() {
 

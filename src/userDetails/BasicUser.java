@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class BasicUser extends User {
 
-    BasicUser () {
+    public BasicUser () {
         userName = "ape";
         wallet = 0;
     }
