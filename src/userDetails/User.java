@@ -1,6 +1,8 @@
 package userDetails;
 
 public abstract class User {
-    protected String userName;
-    protected int wallet;
+    public String userName;
+    public int wallet;
+
+    public abstract void initialize();
 }

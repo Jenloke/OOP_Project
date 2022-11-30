@@ -1,14 +1,18 @@
+import java.util.ArrayList;
+
 import userDetails.*;
 import game.ColorGame;
 import tools.*;
 
 public class UI {
+    private static boolean userSelected;
+
     public void init() {
         while(true) {
             Out.println("Welcome to Color Game!!!");
             //users.User method or create new user object
             Out.println("(1) Play Color Game");
-            Out.println("(2) Select users.User");
+            Out.println("(2) Select / Create User");
             Out.println("(3) Wallet");
             Out.println("(4) Exit");
             select();
@@ -57,19 +61,34 @@ public class UI {
     }
 
     private void play() {
-        //BasicUser asd = new BasicUser();
+        if (users.isEmpty()) {
+            Out.println("No Users present in database");
+            Out.line();
+            return;
+        }
+
         int bet = ColorGame.play(100);
         //asd.updateWallet(bet);
     }
     private void users() {
+        System.out.printf("");
 
+        //Create User
+        users.add(new BasicUser());
+        //System.out.printf(users)
     }
     private void wallet() {
-
+        if (users.isEmpty()) {
+            Out.println("No Users present in database");
+            Out.line();
+            return;
+        }
     }
 
     private static final int PLAY = 1;
     private static final int USERS = 2;
     private static final int WALLET = 3;
     private static final int EXIT = 4;
+
+    ArrayList<User> users = new ArrayList<>();
 }

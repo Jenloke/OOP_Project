@@ -11,14 +11,13 @@ public class ColorGame extends RandomGenerator {
     private static final int roll = 3;
     private static int selectedColor;
     private static int betAmount;
-    private static int winMultiplier = 1;
-    private static boolean win = false;
     private static int winAmount;
 
     public static int play(int inputBetAmount) {
         setBetAmount(inputBetAmount);
         printColorList();
         selectColor();
+
         set3RandomColor();
         evalWin();
 
@@ -76,16 +75,18 @@ public class ColorGame extends RandomGenerator {
     }
 
     private static void evalWin() {
+        boolean win = false;
+        int winMultiplier = 1;
         for (int i = 0; i < 3; i++) {
             if (selectedColor == rolledColorsValue[i]) {
                 winMultiplier++;
                 win = true;
             }
         }
-        printWin();
+        printWin(win, winMultiplier);
     }
 
-    private static void printWin() {
+    private static void printWin(boolean win, int winMultiplier) {
         if (win) {
             winAmount = betAmount * winMultiplier;
             System.out.printf("You Win %d\n", winAmount);
