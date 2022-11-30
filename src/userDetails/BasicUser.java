@@ -1,3 +1,5 @@
+package userDetails;
+
 import java.util.Scanner;
 
 public class BasicUser extends User {

@@ -3,25 +3,25 @@ package tools;
 import java.util.Scanner;
 
 public class Input {
-    private static Scanner sc = new Scanner(System.in);
-    public static String string(String message){
+    private final static Scanner sc = new Scanner(System.in);
+    public static String string(String message) {
         System.out.print(message);
         return sc.nextLine();
     }
 
-    public static int number(String message){
+    public static int number(String message) {
         System.out.print(message);
-        while(true){
+        while(true) {
             String input = sc.nextLine();
-            try{
+            try {
                 return Integer.parseInt(input);
-            }catch(NumberFormatException e){
+            } catch(NumberFormatException e){
                 System.out.print("Enter a valid number: ");
             }
         }
     }
 
-    public static void close(){
+    public static void close() {
         sc.close();
     }
 }
