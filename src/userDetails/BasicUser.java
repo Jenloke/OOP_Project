@@ -23,7 +23,7 @@ public class BasicUser extends User {
         while(true){
             String input;
             try{
-                input = Input.string("Enter an amount to add to your wallet: ");
+                input = Input.string("Enter an initial amount to add to your wallet: ");
                 int i = Integer.parseInt(input);
                 if(i<1){
                     throw new ChoiceException();

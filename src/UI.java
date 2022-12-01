@@ -70,8 +70,8 @@ public class UI {
             return;
         }
 
-        int walletUpdate = ColorGame.play(100);
         //asd.walletUpdate(bet);
+        int walletUpdate = ColorGame.play(100);
     }
     private void users() {
         Out.println("Users Menu");
@@ -152,7 +152,7 @@ public class UI {
                 break;
             case VIEW_USER:
                 Out.line();
-                if(users.isEmpty()){
+                if (users.isEmpty()) {
                     Out.println("No users available.");
                 }
                 viewUsers();
