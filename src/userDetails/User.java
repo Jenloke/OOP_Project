@@ -11,8 +11,6 @@ public abstract class User {
 
     public abstract void initialize();
 
-    public abstract String getUserName();
-
     public abstract int getWallet();
 
     public abstract int getUserNumber();

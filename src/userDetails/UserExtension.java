@@ -38,11 +38,6 @@ public class UserExtension extends User {
     }
 
     @Override
-    public String getUserName() {
-        return userName;
-    }
-
-    @Override
     public int getWallet() {
         return wallet;
     }
