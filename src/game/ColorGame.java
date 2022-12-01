@@ -51,7 +51,7 @@ public class ColorGame extends RandomGenerator {
         Out.println("Pick your color based on its corresponding number.");
         for (int i=0; i < colors.length; i++) {
             int order = i + 1;
-            Out.println("[" + order + "]" + colors[i]);
+            Out.println("[" + order + "] " + colors[i]);
         }
     }
 
@@ -69,7 +69,8 @@ public class ColorGame extends RandomGenerator {
         Out.println("The 3 random colors rolled are:");
         for (int i=0; i < roll; i++) {
             int displayVal = rolledColorsValue[i] + 1;
-            Out.println("[" + displayVal + "]" + rolledColors[i]);
+            Out.println("Roll #" + (i+1));
+            Out.println("[" + displayVal + "] " + rolledColors[i]);
         }
         Out.line();
     }
@@ -95,6 +96,5 @@ public class ColorGame extends RandomGenerator {
             winAmount = 0;
             Out.println("You Lose your " + betAmount);
         }
-        Out.line();
     }
 }

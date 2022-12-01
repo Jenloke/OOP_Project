@@ -2,10 +2,10 @@ package userDetails;
 
 import tools.*;
 
-public class BasicUser extends User {
+public class UserExtension extends User {
     public static int totalUsers;
 
-    public BasicUser() {
+    public UserExtension() {
         super();
         totalUsers++;
         initialize();
@@ -20,7 +20,7 @@ public class BasicUser extends User {
     }
 
     private int setWallet() {
-        while(true){
+        while (true) {
             String input;
             try{
                 input = Input.string("Enter an initial amount to add to your wallet: ");
@@ -38,6 +38,11 @@ public class BasicUser extends User {
     }
 
     @Override
+    public String getUserName() {
+        return userName;
+    }
+
+    @Override
     public int getWallet() {
         return wallet;
     }
@@ -49,6 +54,6 @@ public class BasicUser extends User {
 
     @Override
     public void print() {
-        Out.println( userName + " " + wallet);
+        Out.println( "User #" + userNumber + ", " + userName + " has " + wallet);
     }
 }

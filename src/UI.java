@@ -1,3 +1,4 @@
+// https://github.com/Jenloke/OOP_Project
 import java.util.ArrayList;
 
 import userDetails.*;
@@ -45,15 +46,33 @@ public class UI {
         switch (choice) {
             case PLAY_UI:
                 Out.line();
+                if (users.isEmpty()) {
+                    Out.println("No Users present in database");
+                    Out.line();
+                    break;
+                } else if (!userSelected) {
+                    Out.println("No user currently logged in.");
+                    Out.line();
+                    break;
+                }
                 play();
                 break;
             case USERS_UI:
                 Out.line();
-                users();
+                usersMenu();
                 break;
             case WALLET_UI:
                 Out.line();
-                wallet();
+                if (users.isEmpty()) {
+                    Out.println("No Users present in database");
+                    Out.line();
+                    break;
+                } else if (!userSelected) {
+                    Out.println("No user currently logged in.");
+                    Out.line();
+                    break;
+                }
+                walletMenu();
                 break;
             case EXIT_UI:
                 Out.line();
@@ -63,31 +82,10 @@ public class UI {
         }
     }
 
-    private void play() {
-        if (users.isEmpty()) {
-            Out.println("No Users present in database");
-            Out.line();
-            return;
-        }
-
-        //asd.walletUpdate(bet);
-        int walletUpdate = ColorGame.play(100);
-    }
-    private void users() {
-        Out.println("Users Menu");
-        evalUserBase();
-        usersMenu();
-    }
-    private void wallet() {
-        if (users.isEmpty()) {
-            Out.println("No Users present in database");
-            Out.line();
-        }
-    }
-
     private void evalUserBase() {
-        if (userNumberSelected != 0) {
-            users.get(userNumberSelected).print();
+        if (userNumberSelected > 0) {
+            Out.println("Currently Logged in User:");
+            users.get(userNumberSelected-1).print();
         } else {
             if (users.isEmpty()) {
                 Out.println("---No Users Made, Create a new user first.---");
@@ -97,7 +95,42 @@ public class UI {
         }
     }
 
+    private void play() {
+        if (users.get(userNumberSelected-1).getWallet() == 0) {
+            Out.println("User #" + users.get(userNumberSelected-1).getUserNumber() + " has no funds inside wallet to play.");
+        } else {
+            Out.println("Your wallet has " + users.get(userNumberSelected-1).getUserNumber());
+            int bet = betAmount();
+            users.get(userNumberSelected-1).updateWallet(-bet);
+            Out.line();
+
+            int resultAmount = ColorGame.play(bet);
+            users.get(userNumberSelected-1).updateWallet(resultAmount);
+        }
+        Out.line();
+    }
+
+    private int betAmount() {
+        while (true) {
+            String input;
+            try {
+                input = Input.string("Enter your bet amount: ");
+                int i = Integer.parseInt(input);
+                if (i < 1 || i > users.get(userNumberSelected-1).getWallet()) {
+                    throw new ChoiceException();
+                }
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                Out.println("Input must be a number");
+            } catch (ChoiceException c) {
+                Out.println("Amount you have entered is greater than what is in your wallet.");
+            }
+        }
+    }
+
     private void usersMenu() {
+        Out.println("Users Menu");
+        evalUserBase();
         Out.println("(1) Logout Current User");
         Out.println("(2) Change to existing User");
         Out.println("(3) Create new User");
@@ -128,7 +161,7 @@ public class UI {
     private void performChoiceUsers(int choice) {
         switch (choice) {
             case LOGOUT_USER:
-                if (users.isEmpty() || userSelected == false) {
+                if (users.isEmpty() || !userSelected) {
                     Out.println("No users to logout.");
                     Out.line();
                     break;
@@ -166,7 +199,7 @@ public class UI {
             try {
                 input = Input.string("Enter the user number of your changed user : ");
                 int i = Integer.parseInt(input);
-                if (i < 1 || i > BasicUser.totalUsers-1) {
+                if (i < 1 || i > UserExtension.totalUsers) {
                     throw new ChoiceException();
                 }
                 return Integer.parseInt(input);
@@ -179,7 +212,7 @@ public class UI {
     }
 
     private void logoutUser() {
-        users.get(userNumberSelected).print();
+        users.get(userNumberSelected-1).print();
         Out.line();
         Out.println("User has successfully logged out.");
         Out.line();
@@ -193,16 +226,19 @@ public class UI {
         userSelected = true;
         userNumberSelected = input;
 
-        Out.println(input + " " + users.get(input).getWallet());
+        Out.println(input + " " + users.get(userNumberSelected-1).getWallet());
         Out.line();
     }
 
     private void createUsers() {
         Out.line();
-        users.add(new BasicUser());
+        users.add(new UserExtension());
+
+        userSelected = true;
+        userNumberSelected = users.get(UserExtension.totalUsers-1).getUserNumber();
 
         Out.println("User has been created.");
-        Out.println("User #" + users.get(users.size()-1).getUserNumber());
+        Out.println("User #" + users.get(UserExtension.totalUsers-1).getUserNumber());
         Out.line();
     }
 
@@ -213,6 +249,102 @@ public class UI {
             users.get(i).print();
         }
         Out.line();
+    }
+
+    private void walletMenu() {
+        Out.println("Wallet Menu");
+        users.get(userNumberSelected-1).print();
+        evalUserBase();
+        Out.println("(1) Deposit to Wallet");
+        Out.println("(2) Withdraw from Wallet");
+        Out.println("(3) Back");
+        selectWallet();
+    }
+
+    private void selectWallet() {
+        while (true) {
+            String input;
+            try {
+                input = Input.string("-> ");
+                int i = Integer.parseInt(input);
+                if(i<1 || i>3){
+                    throw new ChoiceException();
+                }
+                performChoiceWallet(i);
+                break;
+            } catch (NumberFormatException e) {
+                Out.println("Input must be a number");
+            } catch (ChoiceException c) {
+                Out.println("Input must be any of the ff: (1,2,3)");
+            }
+        }
+    }
+
+    private void performChoiceWallet(int choice) {
+        Out.line();
+        switch (choice) {
+            case ADD_WALLET:
+                int addAmount = addWallet();
+                users.get(userNumberSelected-1).updateWallet(addAmount);
+                Out.line();
+                Out.println("You have successfully added " + addAmount + " to your wallet.");
+                Out.line();
+                break;
+            case OUT_WALLET:
+                if (users.get(userNumberSelected-1).getWallet() == 0) {
+                    Out.println("You can't withdraw from your wallet since it does not have a balance.");
+                } else {
+                    int outAmount = outWallet();
+                    users.get(userNumberSelected-1).updateWallet(-outAmount);
+                    Out.line();
+                    Out.println("You have successfully withdrawn " + outAmount + " to your wallet.");
+                    Out.line();
+                }
+                break;
+            case BACK_WALLET:
+                Out.line();
+                break;
+        }
+    }
+
+    private int addWallet() {
+        while (true) {
+            String input;
+            try {
+                input = Input.string("Enter the amount you want to add: ");
+                int i = Integer.parseInt(input);
+                if (i < 1) {
+                    throw new ChoiceException();
+                }
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                Out.println("Input must be a number");
+            } catch (ChoiceException c) {
+                Out.println("The amount you're trying to deposit is less than zero.");
+            }
+        }
+    }
+
+    private int outWallet() {
+        while (true) {
+            String input;
+            try {
+                input = Input.string("Enter the amount you want to withdraw: ");
+                int i = Integer.parseInt(input);
+                if (i < 1) {
+                    Out.println("The amount you're trying to withdraw is less than zero.");
+                    continue;
+                }
+                if (i > users.get(userNumberSelected-1).getWallet()) {
+                    throw new ChoiceException();
+                }
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                Out.println("Input must be a number");
+            } catch (ChoiceException c) {
+                Out.println("The amount you're trying to withdraw is greater than your current wallet value.");
+            }
+        }
     }
 
     // UI Choices
@@ -227,6 +359,11 @@ public class UI {
     private static final int CREATE_USER = 3;
     private static final int BACK_USER = 4;
     private static final int VIEW_USER = 5;
+
+    // WALLET Choices
+    public static final int ADD_WALLET = 1;
+    public static final int OUT_WALLET = 2;
+    public static final int BACK_WALLET = 3;
 
     ArrayList<User> users = new ArrayList<>();
 }
