@@ -49,6 +49,6 @@ public class BasicUser extends User {
 
     @Override
     public void print() {
-        System.out.println( userName + " " + wallet);
+        Out.println( userName + " " + wallet);
     }
 }

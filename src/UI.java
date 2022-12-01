@@ -92,7 +92,7 @@ public class UI {
             if (users.isEmpty()) {
                 Out.println("---No Users Made, Create a new user first.---");
             } else {
-                System.out.println("No user currently logged in.");
+                Out.println("No user currently logged in.");
             }
         }
     }
@@ -209,7 +209,7 @@ public class UI {
     private void viewUsers() {
         Out.println("Color Game UserBase");
         for(int i = 0; i < users.size(); i++) {
-            System.out.println("User #" + (i+1) + " ");
+            Out.println("User #" + (i+1) + " ");
             users.get(i).print();
         }
         Out.line();

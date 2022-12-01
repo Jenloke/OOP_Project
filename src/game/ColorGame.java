@@ -40,9 +40,9 @@ public class ColorGame extends RandomGenerator {
                 selectedColor--;
                 break;
             } catch(NumberFormatException e) {
-                System.out.println("Input must be a number");
+                Out.println("Input must be a number");
             } catch(ChoiceException c) {
-                System.out.println("Input must be any of the ff: (1,2,3,4,5,6)");
+                Out.println("Input must be any of the ff: (1,2,3,4,5,6)");
             }
         }
     }
@@ -51,7 +51,7 @@ public class ColorGame extends RandomGenerator {
         Out.println("Pick your color based on its corresponding number.");
         for (int i=0; i < colors.length; i++) {
             int order = i + 1;
-            System.out.printf("[%d]%s \n", order, colors[i]);
+            Out.println("[" + order + "]" + colors[i]);
         }
     }
 
@@ -69,7 +69,7 @@ public class ColorGame extends RandomGenerator {
         Out.println("The 3 random colors rolled are:");
         for (int i=0; i < roll; i++) {
             int displayVal = rolledColorsValue[i] + 1;
-            System.out.printf("[%d] %s\n", displayVal, rolledColors[i]);
+            Out.println("[" + displayVal + "]" + rolledColors[i]);
         }
         Out.line();
     }
@@ -89,11 +89,11 @@ public class ColorGame extends RandomGenerator {
     private static void printWin(boolean win, int winMultiplier) {
         if (win) {
             winAmount = betAmount * winMultiplier;
-            System.out.printf("You Win %d\n", winAmount);
-            System.out.printf("Bet Amount: %d times %d\n", betAmount, winMultiplier);
+            Out.println("You Win " + winAmount);
+            Out.println("Bet Amount: " + betAmount + " times " + winMultiplier);
         } else {
             winAmount = 0;
-            System.out.printf("You Lose your %d\n", betAmount);
+            Out.println("You Lose your " + betAmount);
         }
         Out.line();
     }
