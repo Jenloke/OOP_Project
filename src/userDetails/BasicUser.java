@@ -3,21 +3,19 @@ package userDetails;
 import tools.*;
 
 public class BasicUser extends User {
-    public static int numberOfUsers;
-    private int userNumber;
-    public boolean selectedUser;
+    public static int totalUsers;
 
     public BasicUser() {
         super();
+        totalUsers++;
         initialize();
-        userNumber = numberOfUsers++;
-        selectedUser = true;
     }
 
     @Override
     public void initialize() {
         this.userName = Input.string("Enter your UserName: ");
         this.wallet = setWallet();
+        userNumber = totalUsers;
         Out.line();
     }
 
@@ -39,11 +37,22 @@ public class BasicUser extends User {
         }
     }
 
+    public void updateWallet(int i) {
+        wallet += i;
+    }
+
+    @Override
+    public int getWallet() {
+        return wallet;
+    }
+
+    @Override
     public int getUserNumber() {
         return userNumber;
     }
 
-    public void updateWallet(int i) {
-        wallet += i;
+    @Override
+    public void print() {
+        System.out.println( userName + " " + wallet);
     }
 }

@@ -6,8 +6,8 @@ public class ColorGame extends RandomGenerator {
     private static final String[] colors = {"Red", "Green", "Blue", "Yellow", "Black", "White"};
 
     // For Game Proper
-    private static String[] rolledColors = new String[3];
-    private static int[] rolledColorsValue = new int[3];
+    private static final String[] rolledColors = new String[3];
+    private static final int[] rolledColorsValue = new int[3];
     private static final int roll = 3;
     private static int selectedColor;
     private static int betAmount;

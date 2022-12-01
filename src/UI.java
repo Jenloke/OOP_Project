@@ -5,63 +5,57 @@ import game.ColorGame;
 import tools.*;
 
 public class UI {
-    private static boolean userSelected;
-    private static int userNumberSelected;
+    private static boolean userSelected = false;
+    private static int userNumberSelected = 0;
 
     public void init() {
-        while(true) {
+        while (true) {
             Out.println("Welcome to Color Game!!!");
-            if (users.isEmpty()) {
-                Out.println("---No Users Made, Create a new user first.---");
-            } else {
-                System.out.println();
-            }
+            Out.println("Number of Color Game Users: " + users.size());
+            evalUserBase();
+
             Out.println("(1) Play Color Game");
             Out.println("(2) Select / Create User");
             Out.println("(3) Wallet");
             Out.println("(4) Exit");
-            select();
+            selectUI();
         }
     }
 
-//    private void selectUserNumber() {
-//        userNumberSelected = getUserNumber();
-//    }
-
-    private void select(){
-        while(true){
+    private void selectUI() {
+        while (true) {
             String input;
-            try{
+            try {
                 input = Input.string("-> ");
                 int i = Integer.parseInt(input);
-                if(i<1 || i>4){
+                if (i<1 || i>4) {
                     throw new ChoiceException();
                 }
-                performChoice(i);
+                performChoiceUI(i);
                 break;
-            }catch(NumberFormatException e){
+            } catch (NumberFormatException e) {
                 Out.println("Input must be a number");
-            }catch(ChoiceException c){
+            } catch (ChoiceException c) {
                 Out.println("Input must be any of the ff: (1,2,3,4)");
             }
         }
     }
 
-    private void performChoice(int choice){
-        switch(choice){
-            case PLAY:
+    private void performChoiceUI (int choice) {
+        switch (choice) {
+            case PLAY_UI:
                 Out.line();
                 play();
                 break;
-            case USERS:
+            case USERS_UI:
                 Out.line();
-                 users();
+                users();
                 break;
-            case WALLET:
+            case WALLET_UI:
                 Out.line();
                 wallet();
                 break;
-            case EXIT:
+            case EXIT_UI:
                 Out.line();
                 Out.println("Thanks for playing Color Game!!!");
                 System.exit(0);
@@ -76,28 +70,146 @@ public class UI {
             return;
         }
 
-        int bet = ColorGame.play(100);
-        //asd.updateWallet(bet);
+        int walletUpdate = ColorGame.play(100);
+        //asd.walletUpdate(bet);
     }
     private void users() {
-        System.out.printf("");
-
-        //Create User
-        users.add(new BasicUser());
-        //System.out.printf(users)
+        Out.println("Users Menu");
+        evalUserBase();
+        usersMenu();
     }
     private void wallet() {
         if (users.isEmpty()) {
             Out.println("No Users present in database");
             Out.line();
-            return;
         }
     }
 
-    private static final int PLAY = 1;
-    private static final int USERS = 2;
-    private static final int WALLET = 3;
-    private static final int EXIT = 4;
+    private void evalUserBase() {
+        if (userNumberSelected != 0) {
+            users.get(userNumberSelected).print();
+        } else {
+            if (users.isEmpty()) {
+                Out.println("---No Users Made, Create a new user first.---");
+            } else {
+                System.out.println("No user currently logged in.");
+            }
+        }
+    }
+
+    private void usersMenu() {
+        Out.println("(1) Logout Current User");
+        Out.println("(2) Change to existing User");
+        Out.println("(3) Create new User");
+        Out.println("(4) Back to Menu");
+        Out.println("(5) View Users");
+        selectUsers();
+    }
+
+    private void selectUsers() {
+        while (true) {
+            String input;
+            try {
+                input = Input.string("-> ");
+                int i = Integer.parseInt(input);
+                if(i<1 || i>5){
+                    throw new ChoiceException();
+                }
+                performChoiceUsers(i);
+                break;
+            } catch (NumberFormatException e) {
+                Out.println("Input must be a number");
+            } catch (ChoiceException c) {
+                Out.println("Input must be any of the ff: (1,2,3,4,5)");
+            }
+        }
+    }
+
+    private void performChoiceUsers(int choice) {
+        switch (choice) {
+            case LOGOUT_USER:
+                Out.line();
+
+                users.get(userNumberSelected).print();
+                Out.println("User has successfully logged out.");
+
+                userSelected = false;
+                userNumberSelected = 0;
+                Out.line();
+                break;
+
+            case CHANGE_USER:
+                Out.line();
+                if (users.isEmpty()) {
+                    Out.println("No users available.");
+                    Out.line();
+                    break;
+                }
+
+                int input = selectUserNumber(); // implement input try catch
+                userSelected = true;
+                userNumberSelected = input;
+
+                Out.println(input + " " + users.get(input).getWallet());
+                Out.line();
+                break;
+
+            case CREATE_USER:
+                Out.line();
+                users.add(new BasicUser());
+
+                Out.println("User #" + users.get(users.size()-1).getUserNumber());
+                Out.line();
+                break;
+
+            case BACK_USER:
+                Out.line();
+                break;
+
+            case VIEW_USER:
+                Out.line();
+                if(users.isEmpty()){
+                    Out.println("No users available.");
+                }
+                for(int i = 0; i < users.size(); i++) {
+                    System.out.println("User #" + (i+1) + " ");
+                    users.get(i).print();
+                }
+                Out.line();
+                break;
+        }
+    }
+
+    private int selectUserNumber() {
+        while (true) {
+            String input;
+            try {
+                input = Input.string("Enter the user number of your changed user : ");
+                int i = Integer.parseInt(input);
+                if (i < 1 || i > BasicUser.totalUsers-1) {
+                    throw new ChoiceException();
+                }
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                Out.println("Input must be a number");
+            } catch (ChoiceException c) {
+                Out.println("User Number may have not yet been generated.");
+            }
+        }
+    }
+
+    // UI Choices
+    private static final int PLAY_UI = 1;
+    private static final int USERS_UI = 2;
+    private static final int WALLET_UI = 3;
+    private static final int EXIT_UI = 4;
+
+    // USERS Choices
+    private static final int LOGOUT_USER = 1;
+    private static final int CHANGE_USER = 2;
+    private static final int CREATE_USER = 3;
+    private static final int BACK_USER = 4;
+    private static final int VIEW_USER = 5;
 
     ArrayList<User> users = new ArrayList<>();
 }
