@@ -5,6 +5,10 @@ public abstract class User {
     public int wallet;
     public int userNumber;
 
+    public void updateWallet(int i) {
+        wallet += i;
+    }
+
     public abstract void initialize();
 
     public abstract int getWallet();

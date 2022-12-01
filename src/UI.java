@@ -128,54 +128,34 @@ public class UI {
     private void performChoiceUsers(int choice) {
         switch (choice) {
             case LOGOUT_USER:
-                Out.line();
-
-                users.get(userNumberSelected).print();
-                Out.println("User has successfully logged out.");
-
-                userSelected = false;
-                userNumberSelected = 0;
-                Out.line();
-                break;
-
-            case CHANGE_USER:
-                Out.line();
-                if (users.isEmpty()) {
-                    Out.println("No users available.");
+                if (users.isEmpty() || userSelected == false) {
+                    Out.println("No users to logout.");
                     Out.line();
                     break;
                 }
-
-                int input = selectUserNumber(); // implement input try catch
-                userSelected = true;
-                userNumberSelected = input;
-
-                Out.println(input + " " + users.get(input).getWallet());
-                Out.line();
+                logoutUser();
                 break;
-
+            case CHANGE_USER:
+                Out.line();
+                if (users.isEmpty()) {
+                    Out.println("No users available to change into.");
+                    Out.line();
+                    break;
+                }
+                changeUser();
+                break;
             case CREATE_USER:
-                Out.line();
-                users.add(new BasicUser());
-
-                Out.println("User #" + users.get(users.size()-1).getUserNumber());
-                Out.line();
+                createUsers();
                 break;
-
             case BACK_USER:
                 Out.line();
                 break;
-
             case VIEW_USER:
                 Out.line();
                 if(users.isEmpty()){
                     Out.println("No users available.");
                 }
-                for(int i = 0; i < users.size(); i++) {
-                    System.out.println("User #" + (i+1) + " ");
-                    users.get(i).print();
-                }
-                Out.line();
+                viewUsers();
                 break;
         }
     }
@@ -196,6 +176,43 @@ public class UI {
                 Out.println("User Number may have not yet been generated.");
             }
         }
+    }
+
+    private void logoutUser() {
+        users.get(userNumberSelected).print();
+        Out.line();
+        Out.println("User has successfully logged out.");
+        Out.line();
+
+        userSelected = false;
+        userNumberSelected = 0;
+    }
+
+    private void changeUser() {
+        int input = selectUserNumber();
+        userSelected = true;
+        userNumberSelected = input;
+
+        Out.println(input + " " + users.get(input).getWallet());
+        Out.line();
+    }
+
+    private void createUsers() {
+        Out.line();
+        users.add(new BasicUser());
+
+        Out.println("User has been created.");
+        Out.println("User #" + users.get(users.size()-1).getUserNumber());
+        Out.line();
+    }
+
+    private void viewUsers() {
+        Out.println("Color Game UserBase");
+        for(int i = 0; i < users.size(); i++) {
+            System.out.println("User #" + (i+1) + " ");
+            users.get(i).print();
+        }
+        Out.line();
     }
 
     // UI Choices

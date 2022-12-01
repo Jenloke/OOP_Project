@@ -37,10 +37,6 @@ public class BasicUser extends User {
         }
     }
 
-    public void updateWallet(int i) {
-        wallet += i;
-    }
-
     @Override
     public int getWallet() {
         return wallet;
