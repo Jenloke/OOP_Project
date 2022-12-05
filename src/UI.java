@@ -99,7 +99,7 @@ public class UI {
         if (users.get(userNumberSelected-1).getWallet() == 0) {
             Out.println("User #" + users.get(userNumberSelected-1).getUserNumber() + " has no funds inside wallet to play.");
         } else {
-            Out.println("Your wallet has " + users.get(userNumberSelected-1).getUserNumber());
+            Out.println("User #" + users.get(userNumberSelected-1).getUserNumber() + ", " + users.get(userNumberSelected-1).getUserName() + " wallet has " + users.get(userNumberSelected-1).getWallet());
             int bet = betAmount();
             users.get(userNumberSelected-1).updateWallet(-bet);
             Out.line();
@@ -162,6 +162,7 @@ public class UI {
         switch (choice) {
             case LOGOUT_USER:
                 if (users.isEmpty() || !userSelected) {
+                    Out.line();
                     Out.println("No users to logout.");
                     Out.line();
                     break;
@@ -253,7 +254,6 @@ public class UI {
 
     private void walletMenu() {
         Out.println("Wallet Menu");
-        users.get(userNumberSelected-1).print();
         evalUserBase();
         Out.println("(1) Deposit to Wallet");
         Out.println("(2) Withdraw from Wallet");

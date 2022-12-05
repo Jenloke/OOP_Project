@@ -1,4 +1,4 @@
 package tools;
 
-public class ChoiceException extends Exception{
+public class ChoiceException extends Exception {
 }
